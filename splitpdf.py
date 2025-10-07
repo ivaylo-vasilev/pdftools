@@ -1,13 +1,13 @@
 import argparse
 import os
 import sys
-import fitz
+import pymupdf
 
-parser = argparse.ArgumentParser(prog="splitpdf", description="Split PDF documents at given pages", epilog="(c)2024 Ivaylo Vasilev")
+parser = argparse.ArgumentParser(prog="splitpdf", description="Split PDF documents at given pages", epilog="(c)Ivaylo Vasilev")
 parser.add_argument("pdf", nargs="?", help="specify PDF document for splitting")
 parser.add_argument("-p", "--pages", metavar="N", type=int, default=5, help="set the number of pages to split")
 parser.add_argument("-d", "--directory", metavar="PATH", default=os.curdir, help="set directory for new files")
-parser.add_argument("--version", action="version", version="%(prog)s 2024.1rv0-1.21.1", help="show program version")
+parser.add_argument("--version", action="version", version="%(prog)s 2025.0", help="show program version")
 args = parser.parse_args()
 
 
@@ -34,7 +34,7 @@ def splitter(pdf, pages):
 
     new_docs = 0
 
-    main_doc = fitz.Document(pdf)
+    main_doc = pymupdf.Document(pdf)
     docpages = int(main_doc.page_count)
     marker = int(main_doc.page_count)
 
@@ -60,7 +60,7 @@ def splitter(pdf, pages):
     while docpages > 0:
         if docpages == marker:
             varname = (f"{savedir}{os.path.splitext(pdf)[0]}-{n}.pdf")
-            temp_doc = fitz.Document()
+            temp_doc = pymupdf.Document()
             temp_doc.insert_pdf(main_doc, from_page=0, to_page=varpages)
             temp_doc.save(varname, garbage=4, deflate=True, clean=True)
             temp_doc.close()
@@ -70,7 +70,7 @@ def splitter(pdf, pages):
             print(f"[+] saved: {varname}")
         elif docpages < pages:
             varname = (f"{savedir}{os.path.splitext(pdf)[0]}-{n}.pdf")
-            temp_doc = fitz.Document()
+            temp_doc = pymupdf.Document()
             temp_doc.insert_pdf(main_doc, from_page=(varpages + 1))
             temp_doc.save(varname, garbage=4, deflate=True, clean=True)
             temp_doc.close()
@@ -79,7 +79,7 @@ def splitter(pdf, pages):
             break
         else:
             varname = (f"{savedir}{os.path.splitext(pdf)[0]}-{n}.pdf")
-            temp_doc = fitz.Document()
+            temp_doc = pymupdf.Document()
             temp_doc.insert_pdf(main_doc, from_page=(varpages + 1), to_page=(varpages + pages))
             temp_doc.save(varname, garbage=4, deflate=True, clean=True)
             temp_doc.close()

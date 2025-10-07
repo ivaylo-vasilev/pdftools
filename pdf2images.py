@@ -3,13 +3,13 @@
 import argparse
 import os
 import sys
-import fitz
+import pymupdf
 
 parser = argparse.ArgumentParser(description="PDF2Images convertor", epilog="(c)Ivaylo Vasilev")
 parser.add_argument("pdf", nargs="?", help="specify PDF document")
 parser.add_argument("-i", "--images", metavar="png|jpg", default="png", help="set images format: png | jpg")
 parser.add_argument("-d", "--directory", metavar="PATH", help="set output directory for images")
-parser.add_argument("--version", action="version", version="PDF2Images 2024.5", help="show program version")
+parser.add_argument("--version", action="version", version="PDF2Images 2025.0", help="show program version")
 args = parser.parse_args()
 
 
@@ -21,7 +21,7 @@ def main():
     print("")
     print("*         PDF2Images convertor         *")
     print("========================================")
-    print("*        (c)2024 Ivaylo Vasilev        *")
+    print("*        (c)2025 Ivaylo Vasilev        *")
     print("")
     pdf_file = args.pdf
     if not os.path.isfile(pdf_file):
@@ -53,7 +53,7 @@ def extractor(pdf):
     print("Converting ...")
 
     img = 0
-    doc = fitz.Document(pdf)
+    doc = pymupdf.Document(pdf)
     if image_fmt == "jpg":
         if not os.path.isdir(f"{dirpath}{os.sep}{name}-JPEG"):
             os.makedirs(f"{dirpath}{os.sep}{name}-JPEG")
