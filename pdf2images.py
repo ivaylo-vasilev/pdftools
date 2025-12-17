@@ -8,24 +8,27 @@ import pymupdf
 parser = argparse.ArgumentParser(description="PDF2Images convertor", epilog="(c)Ivaylo Vasilev")
 parser.add_argument("pdf", nargs="?", help="specify PDF document")
 parser.add_argument("-i", "--images", metavar="png|jpg", default="png", help="set images format: png | jpg")
+parser.add_argument("-q", "--quality", metavar="DPI", type=int, default=300, choices=[72, 96, 300, 600], 
+                    help="set images quality in DPI (72|96|300|600)")
 parser.add_argument("-d", "--directory", metavar="PATH", help="set output directory for images")
-parser.add_argument("--version", action="version", version="PDF2Images 2025.0", help="show program version")
+parser.add_argument("--version", action="version", version="PDF2Images 2026.0", help="show program version")
 args = parser.parse_args()
 
 
 def main():
     if len(sys.argv) == 1:
         parser.print_usage()
-        sys.exit(f"usage: {sys.argv[0]} [pdf] [-i png|jpg] [-d <path>]")
+        sys.exit(1)
     
     print("")
     print("*         PDF2Images convertor         *")
     print("========================================")
-    print("*        (c)2025 Ivaylo Vasilev        *")
+    print("*          (c) Ivaylo Vasilev          *")
     print("")
     pdf_file = args.pdf
     if not os.path.isfile(pdf_file):
-        sys.exit(f"[!] PDF file not found at location '{pdf_file}'")
+        print(f"[!] PDF file not found at location '{pdf_file}'")
+        sys.exit(1)
     else:
         extractor(pdf_file)
 
@@ -35,6 +38,7 @@ def extractor(pdf):
     name = file.replace(" ", "-")
 
     image_fmt = args.images
+    dpi = args.quality
     if image_fmt == "jpg":
         print("[+] Converting PDF file to JPG images.")
     elif image_fmt == "png":
@@ -58,16 +62,16 @@ def extractor(pdf):
         if not os.path.isdir(f"{dirpath}{os.sep}{name}-JPEG"):
             os.makedirs(f"{dirpath}{os.sep}{name}-JPEG")
         for page in doc.pages():
-            pix = page.get_pixmap()
+            pix = page.get_pixmap(dpi=dpi)
             page_number = page.number + 1
             print(f"Saving Page #{page_number} ...", end="\r")
-            pix.pil_save(f"{dirpath}{os.sep}{name}-JPEG/page-{page_number}.jpg", optimize=True, dpi=(600, 600))
+            pix.pil_save(f"{dirpath}{os.sep}{name}-JPEG/page-{page_number}.jpg", optimize=True, dpi=(dpi, dpi))
             img += 1
     elif image_fmt == "png":
         if not os.path.isdir(f"{dirpath}{os.sep}{name}-PNG"):
             os.makedirs(f"{dirpath}{os.sep}{name}-PNG")
         for page in doc.pages():
-            pix = page.get_pixmap()
+            pix = page.get_pixmap(dpi=dpi)
             page_number = page.number + 1
             print(f"Saving Page #{page_number} ...", end="\r")
             pix.save(f"{dirpath}{os.sep}{name}-PNG/page-{page_number}.png")
