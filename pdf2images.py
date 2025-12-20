@@ -11,13 +11,13 @@ parser.add_argument("-i", "--images", metavar="png|jpg", default="png", help="se
 parser.add_argument("-q", "--quality", metavar="DPI", type=int, default=300, choices=[72, 96, 300, 600], 
                     help="set images quality in DPI (72|96|300|600)")
 parser.add_argument("-d", "--directory", metavar="PATH", help="set output directory for images")
-parser.add_argument("--version", action="version", version="PDF2Images 2026.0", help="show program version")
+parser.add_argument("--version", action="version", version="PDF2Images 2026.0-1", help="show program version")
 args = parser.parse_args()
 
 
 def main():
     if len(sys.argv) == 1:
-        parser.print_usage()
+        parser.print_help()
         sys.exit(1)
     
     print("")
@@ -41,11 +41,14 @@ def extractor(pdf):
     dpi = args.quality
     if image_fmt == "jpg":
         print("[+] Converting PDF file to JPG images.")
+        print(f"[+] Using image resolution: {dpi} dpi")
     elif image_fmt == "png":
         print("[+] Converting PDF file to PNG images.")
+        print(f"[+] Using image resolution: {dpi} dpi")
     else:
         print(f"[!] Wrong format '{image_fmt}'")
         print("[+] Using the default image format: 'png'")
+        print(f"[+] Using image resolution: {dpi} dpi")
         image_fmt = "png"
 
     if args.directory:

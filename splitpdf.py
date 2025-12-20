@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+
 import argparse
 import os
 import sys
@@ -7,13 +9,13 @@ parser = argparse.ArgumentParser(prog="splitpdf", description="Split PDF documen
 parser.add_argument("pdf", nargs="?", help="specify PDF document for splitting")
 parser.add_argument("-p", "--pages", metavar="N", type=int, default=5, help="set the number of pages to split")
 parser.add_argument("-d", "--directory", metavar="PATH", default=os.curdir, help="set directory for new files")
-parser.add_argument("--version", action="version", version="%(prog)s 2025.0", help="show program version")
+parser.add_argument("--version", action="version", version="%(prog)s 2025.1", help="show program version")
 args = parser.parse_args()
 
 
 def main():
     if len(sys.argv) == 1:
-        print("usage: splitpdf [-h] [-p N] [-d PATH] [--version] [pdf]")
+        parser.print_help()
         sys.exit(3)
     
     pdf = args.pdf
