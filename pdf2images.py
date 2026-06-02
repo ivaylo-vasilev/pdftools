@@ -1,5 +1,13 @@
 #!/usr/bin/env python3
 
+##############################
+# PDF2Images #
+# ========== #
+# Convert PDF files into PNG or JPEG images
+# Copyright (c)2025 Ivaylo Vasilev. Released under the MIT License; see LICENSE for details.
+# Author: Ivaylo Vasilev
+##############################
+
 import argparse
 import os
 import sys

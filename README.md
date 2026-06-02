@@ -1,7 +1,7 @@
-# pdftools
+# PDF tools
 CLI tools for working with PDF files.
 ---
-**pdf2images.py** - convert **PDF files** into images
+**PDF2Images** - convert **PDF files** into images
  * supported images file formats: **PNG** and **JPEG**
  * supported images quality: up to 600dpi
 
@@ -30,7 +30,7 @@ options:
 
 ---
 
-**splitpdf.py** - split **PDF files** into smaller files by given pages.
+**SplitPDF** - split **PDF files** into smaller files by given pages.
 
 ```
 $ splitpdf.py --help

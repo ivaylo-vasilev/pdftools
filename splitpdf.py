@@ -1,5 +1,13 @@
 #!/usr/bin/env python3
 
+##############################
+# SplitPDF #
+# ======== #
+# Split PDF files into smaller files by given pages
+# Copyright (c)2025 Ivaylo Vasilev. Released under the MIT License; see LICENSE for details.
+# Author: Ivaylo Vasilev
+##############################
+
 import argparse
 import os
 import sys
@@ -9,7 +17,7 @@ parser = argparse.ArgumentParser(prog="splitpdf", description="Split PDF documen
 parser.add_argument("pdf", nargs="?", help="specify PDF document for splitting")
 parser.add_argument("-p", "--pages", metavar="N", type=int, default=5, help="set the number of pages to split")
 parser.add_argument("-d", "--directory", metavar="PATH", default=os.curdir, help="set directory for new files")
-parser.add_argument("--version", action="version", version="%(prog)s 2025.1", help="show program version")
+parser.add_argument("--version", action="version", version="SplitPDF 2026.0", help="show program version")
 args = parser.parse_args()
 
 
